@@ -25,7 +25,11 @@
 
 #include <string>
 
+#ifdef HAVE_RE2
 #include <re2/re2.h>
+#else
+#include <regex>
+#endif
 
 #include <served/mux/segment_matcher.hpp>
 
@@ -39,7 +43,11 @@ namespace served { namespace mux {
 class regex_matcher : public segment_matcher
 {
 	const std::string _variable_name;
+#ifdef HAVE_RE2
 	re2::RE2          _regex;
+#else
+	std::regex        _regex;
+#endif
 
 public:
 	/*

@@ -31,9 +31,11 @@ regex_matcher::regex_matcher(const std::string & variable_name, const std::strin
 	: _variable_name(variable_name)
 	, _regex(regex)
 {
+#ifdef HAVE_RE2
 	if (!_regex.ok()) {
 		throw std::runtime_error(_regex.error());
 	}
+#endif
 }
 
 //  -----  matching logic  -----
@@ -41,10 +43,14 @@ regex_matcher::regex_matcher(const std::string & variable_name, const std::strin
 bool
 regex_matcher::check_match(const std::string & path_segment)
 {
+#ifdef HAVE_RE2
 	if (_regex.ok()) {
 		return (re2::RE2::FullMatch(path_segment, _regex));
 	}
 	return false;
+#else
+	return (std::regex_match(path_segment, _regex));
+#endif
 }
 
 //  -----  REST param collecting  -----

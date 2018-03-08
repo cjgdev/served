@@ -58,7 +58,7 @@ else ()
   message(STATUS "Not Found RE2: ${RE2_LIBRARY}")
   if (RE2_FIND_REQUIRED)
     message(STATUS "Looked for RE2 libraries named ${RE2_NAMES}.")
-    message(FATAL_ERROR "Could NOT find RE2 library")
+    message(WARNING "Could NOT find RE2 library")
   endif ()
 endif ()
 

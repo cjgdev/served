@@ -71,8 +71,8 @@ split_path(const std::string & path)
 	const char * path_ptr = path.c_str();
 	const size_t path_len = path.length();
 
-	char   tmp[path.length()];
-	char * end = tmp;
+	std::string tmp(path.length(), '\0');
+	size_t      end = 0;
 
 	const char * const eol = path_ptr + path_len;
 
@@ -80,21 +80,21 @@ split_path(const std::string & path)
 	{
 		if ( '/' ==  *path_ptr )
 		{
-			if ( end != tmp )
+			if ( end != 0 )
 			{
-				chunks.push_back(std::string(tmp, end));
-				end = tmp;
+				chunks.push_back(tmp.substr(0, end));
+				end = 0;
 			}
 		}
 		else
 		{
-			*end++ = *path_ptr;
+			tmp[end++] = *path_ptr;
 		}
 	}
 
-	if ( end != tmp )
+	if ( end != 0 )
 	{
-		chunks.push_back(std::string(tmp, end));
+		chunks.push_back(tmp.substr(0, end));
 	}
 	else if ( '/' == path[path.length() - 1] )
 	{

@@ -65,7 +65,7 @@ methods_handler::put (served_req_handler handler)
 methods_handler &
 methods_handler::del (served_req_handler handler)
 {
-	_handlers[served::method::DELETE] = handler;
+	_handlers[served::method::DEL] = handler;
 	return *this;
 }
 

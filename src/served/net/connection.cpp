@@ -28,7 +28,8 @@
 #include <utility>
 #include <vector>
 
-using namespace served::net;
+using namespace served;
+using namespace net;
 
 connection::connection( boost::asio::io_service &    io_service
                       , boost::asio::ip::tcp::socket socket
@@ -161,7 +162,7 @@ connection::do_read()
 					response::stock_reply(served::status_4XX::REQ_ENTITY_TOO_LARGE, _response);
 					do_write();
 				}
-				else if ( request_parser_impl::ERROR == result )
+				else if ( request_parser_impl::PARSE_ERROR == result )
 				{
 					// Error occurred while parsing, respond with BAD_REQUEST
 

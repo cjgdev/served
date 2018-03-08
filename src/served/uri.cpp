@@ -54,8 +54,8 @@ query_escape(const std::string& s) {
 	const unsigned char* src_ptr = (const unsigned char*)s.c_str();
 	const size_t         src_len = s.length();
 
-	unsigned char        tmp[src_len * 3];
-	unsigned char*       end = tmp;
+	std::string tmp(src_len * 3, '\0');
+	size_t      end = 0;
 
 	const unsigned char * const eol = src_ptr + src_len;
 
@@ -66,14 +66,14 @@ query_escape(const std::string& s) {
 			(c >= '0' && c <= '9') ||
 			c == '-' || c == '.' || c == '_' || c == '~')
 		{
-			*end++ = *src_ptr;
+			tmp[end++] = *src_ptr;
 		} else {
-			*end++ = '%';
-			*end++ = hex_table[*src_ptr >> 4];
-			*end++ = hex_table[*src_ptr & 0x0F];
+			tmp[end++] = '%';
+			tmp[end++] = hex_table[*src_ptr >> 4];
+			tmp[end++] = hex_table[*src_ptr & 0x0F];
 		}
 	}
-	return std::string((char*)tmp, (char*)end);
+	return tmp.substr(0, end);
 }
 
 std::string
@@ -84,8 +84,8 @@ query_unescape(const std::string& s) {
 	const unsigned char* const eol = src_ptr + src_len;
 	const unsigned char* const last_decodable = eol - 2;
 
-	char  tmp[src_len];
-	char* end = tmp;
+	std::string tmp(src_len * 3, '\0');
+	size_t      end = 0;
 
 	while (src_ptr < last_decodable) {
 		if (*src_ptr == '%') {
@@ -93,19 +93,19 @@ query_unescape(const std::string& s) {
 			if (-1 != (dec1 = dec_to_hex[*(src_ptr + 1)])
 				&& -1 != (dec2 = dec_to_hex[*(src_ptr + 2)]))
 			{
-				*end++ = (dec1 << 4) + dec2;
+				tmp[end++] = (dec1 << 4) + dec2;
 				src_ptr += 3;
 				continue;
 			}
 		}
-		*end++ = *src_ptr++;
+		tmp[end++] = *src_ptr++;
 	}
 
 	while (src_ptr < eol) {
-		*end++ = *src_ptr++;
+		tmp[end++] = *src_ptr++;
 	}
 
-	return std::string((char*)tmp, (char*)end);
+	return tmp.substr(0, end);
 }
 
 //  -----  constructors  -----

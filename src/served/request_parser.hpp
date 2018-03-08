@@ -55,7 +55,7 @@ class request_parser {
 	size_t d_offset;
 
 public:
-	enum status { RUNNING = 0, FINISHED, ERROR };
+	enum status { RUNNING = 0, FINISHED, PARSE_ERROR };
 
 private:
 	/*

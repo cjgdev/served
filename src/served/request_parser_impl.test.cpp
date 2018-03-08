@@ -91,7 +91,7 @@ TEST_CASE("request parser impl can parse bad requests", "[request_parser_impl]")
 
 		auto status = parser.parse(request, strlen(request));
 
-		REQUIRE(status == served::request_parser_impl::ERROR);
+		REQUIRE(status == served::request_parser_impl::PARSE_ERROR);
 	}
 
 	SECTION("Unrecognised HTTP protocol")
@@ -108,7 +108,7 @@ TEST_CASE("request parser impl can parse bad requests", "[request_parser_impl]")
 
 		auto status = parser.parse(request, strlen(request));
 
-		REQUIRE(status == served::request_parser_impl::ERROR);
+		REQUIRE(status == served::request_parser_impl::PARSE_ERROR);
 	}
 }
 
@@ -197,10 +197,10 @@ TEST_CASE("test parser states", "[request_parser_impl]")
 		served::request dummy_req;
 		served::request_parser_impl parser(dummy_req);
 		auto sections = section_stories {{
-			section_story { "GET /endpoinMISTAKEHEREHTTP/1.1\r", status_type::ERROR },
-			section_story { "\nHost: localhost",                 status_type::ERROR },
-			section_story { "\r\nAgent: me\r\n",                 status_type::ERROR },
-			section_story { "\r\n",                              status_type::ERROR },
+			section_story { "GET /endpoinMISTAKEHEREHTTP/1.1\r", status_type::PARSE_ERROR },
+			section_story { "\nHost: localhost",                 status_type::PARSE_ERROR },
+			section_story { "\r\nAgent: me\r\n",                 status_type::PARSE_ERROR },
+			section_story { "\r\n",                              status_type::PARSE_ERROR },
 		}};
 
 		for ( const auto & section : sections )
@@ -380,10 +380,10 @@ TEST_CASE("test parser states", "[request_parser_impl]")
 			section_story { "PUT /endpoints HTTP/1.1\r\n", status_type::READ_HEADER },
 			section_story { "Content-Type: text/html\r\n", status_type::READ_HEADER },
 			section_story { "Expect: 100-continue\r\n",    status_type::READ_HEADER },
-			section_story { "\r\n",                        status_type::ERROR       },
-			section_story { "A small amount of body f",    status_type::ERROR       },
-			section_story { "or youto enjoy plz thxx",     status_type::ERROR       },
-			section_story { "plz ignore this..",           status_type::ERROR       },
+			section_story { "\r\n",                        status_type::PARSE_ERROR },
+			section_story { "A small amount of body f",    status_type::PARSE_ERROR },
+			section_story { "or youto enjoy plz thxx",     status_type::PARSE_ERROR },
+			section_story { "plz ignore this..",           status_type::PARSE_ERROR },
 		}};
 
 		for ( const auto & section : sections )

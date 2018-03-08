@@ -3446,7 +3446,7 @@ request_parser::get_status()
 {
 	if ( parser_error() )
 	{
-		return ERROR;
+		return PARSE_ERROR;
 	}
 	else if ( parser_finished() )
 	{

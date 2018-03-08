@@ -46,9 +46,9 @@ class server
 	connection_manager             _connection_manager;
 	boost::asio::ip::tcp::socket   _socket;
 	multiplexer &                  _request_handler;
-	int                            _read_timeout;
+	size_t                         _read_timeout;
 	int                            _write_timeout;
-	size_t                         _req_max_bytes;
+	int                            _req_max_bytes;
 
 public:
 	server(const server&) = delete;
@@ -91,7 +91,7 @@ public:
 	 *
 	 * @param time_milliseconds the time in milliseconds to wait, 0 is ignored and no timeout is set
 	 */
-	void set_read_timeout(int time_milliseconds);
+	void set_read_timeout(size_t time_milliseconds);
 
 	/*
 	 * Sets the maximum length of time in milliseconds to wait for a client to fully receive the
@@ -107,7 +107,7 @@ public:
 	 *
 	 * @param num_bytes the number of bytes permitted, 0 is ignored and no limit is used
 	 */
-	void set_max_request_bytes(size_t num_bytes);
+	void set_max_request_bytes(int num_bytes);
 
 private:
 	/*

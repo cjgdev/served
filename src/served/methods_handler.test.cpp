@@ -50,7 +50,7 @@ TEST_CASE("test methods handling", "[methods_handler]")
 		CHECK(h.method_supported(served::method::CONNECT) == true);
 		CHECK(h.method_supported(served::method::PUT) == true);
 
-		CHECK(h.method_supported(served::method::DELETE) == false);
+		CHECK(h.method_supported(served::method::DEL) == false);
 		CHECK(h.method_supported(served::method::HEAD) == false);
 		CHECK(h.method_supported(served::method::BREW) == false);
 	}

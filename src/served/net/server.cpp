@@ -26,7 +26,8 @@
 
 #include <served/net/server.hpp>
 
-using namespace served::net;
+using namespace served;
+using namespace net;
 
 server::server( const std::string & address
               , const std::string & port
@@ -100,7 +101,7 @@ server::run(int n_threads /* = 1 */)
 }
 
 void
-server::set_read_timeout(int time_milliseconds)
+server::set_read_timeout(size_t time_milliseconds)
 {
 	_read_timeout = time_milliseconds;
 }
@@ -112,7 +113,7 @@ server::set_write_timeout(int time_milliseconds)
 }
 
 void
-server::set_max_request_bytes(size_t num_bytes)
+server::set_max_request_bytes(int num_bytes)
 {
 	_req_max_bytes = num_bytes;
 }

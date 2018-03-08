@@ -32,7 +32,7 @@ namespace served {
  * HTTP method enum
  */
 enum method {
-	GET, POST, HEAD, PUT, DELETE, OPTIONS, TRACE, CONNECT, BREW
+	GET, POST, HEAD, PUT, DEL, OPTIONS, TRACE, CONNECT, BREW
 };
 
 /*
@@ -55,7 +55,7 @@ method_to_string(enum method m)
 			return "HEAD";
 		case method::PUT:
 			return "PUT";
-		case method::DELETE:
+		case method::DEL:
 			return "DELETE";
 		case method::OPTIONS:
 			return "OPTIONS";
@@ -92,7 +92,7 @@ method_from_string(const std::string & str)
 		return method::PUT;
 	}
 	if ( "DELETE" == str ) {
-		return method::DELETE;
+		return method::DEL;
 	}
 	if ( "OPTIONS" == str ) {
 		return method::OPTIONS;

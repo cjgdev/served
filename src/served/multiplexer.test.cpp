@@ -179,7 +179,7 @@ TEST_CASE("multiplexer path routing", "[mux]")
 			}
 
 			INFO( "comparing size of received for pattern: " << story.pattern );
-			CHECK( story.expected_200s.size() == story.received.size() );
+			REQUIRE( story.expected_200s.size() == story.received.size() );
 			for ( unsigned int i = 0; i < story.expected_200s.size(); i++ )
 			{
 				CHECK( story.expected_200s[i] == story.received[i] );
@@ -245,7 +245,7 @@ TEST_CASE("multiplexer method routing", "[mux]")
 			CHECK_NOTHROW(mux.forward_to_handler( res, req ));
 
 			INFO("Checking accepts DEL");
-			req.set_method(served::method::DELETE);
+			req.set_method(served::method::DEL);
 			CHECK_NOTHROW(mux.forward_to_handler( res, req ));
 
 			INFO("Checking accepts HEAD");

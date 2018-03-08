@@ -66,7 +66,7 @@ request_parser_impl::parse(const char *data, size_t len)
 		}
 		catch (...)
 		{
-			_status = status_type::ERROR;
+			_status = status_type::PARSE_ERROR;
 			return _status;
 		}
 
@@ -80,7 +80,7 @@ request_parser_impl::parse(const char *data, size_t len)
 			{
 				if ( 0 == _body_expected )
 				{
-					_status = request_parser_impl::ERROR;
+					_status = request_parser_impl::PARSE_ERROR;
 				}
 				else
 				{
@@ -97,9 +97,9 @@ request_parser_impl::parse(const char *data, size_t len)
 				_status = request_parser_impl::FINISHED;
 			}
 		}
-		else if ( request_parser::ERROR == status )
+		else if ( request_parser::PARSE_ERROR == status )
 		{
-			_status = request_parser_impl::ERROR;
+			_status = request_parser_impl::PARSE_ERROR;
 		}
 	}
 	else if ( _status == status_type::EXPECT_CONTINUE
